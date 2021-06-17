@@ -23,6 +23,8 @@
 //! Bit 16 is set.
 //! ```
 
+#![no_std]
+
 #[cfg(test)]
 mod tests;
 
