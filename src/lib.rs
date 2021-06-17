@@ -69,7 +69,7 @@ macro_rules! iter_impl {
         impl Iterator for BitIter<$t> {
             type Item = usize;
 
-            fn next(&mut self) -> Option<usize> {
+            fn next(&mut self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     let trailing = self.0.trailing_zeros() as usize;
                     self.0 &= self.0.wrapping_sub(1);
