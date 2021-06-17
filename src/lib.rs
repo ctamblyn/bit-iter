@@ -28,6 +28,31 @@
 #[cfg(test)]
 mod tests;
 
+/// An iterator which returns the positions of the set bits in an integral value.
+///
+/// ## Examples
+///
+/// Construct a `BitIter` from an integer:
+///
+/// ```rust
+/// # fn main() {
+/// # use bit_iter::*;
+/// let mut iter = BitIter::from(0b10000001);
+/// assert_eq!(iter.next(), Some(0usize));
+/// assert_eq!(iter.next(), Some(7usize));
+/// assert_eq!(iter.next(), None);
+/// # }
+/// ```
+///
+/// Iterate over the bits in an integer:
+///
+/// ```rust
+/// # fn main() {
+/// # use bit_iter::*;
+/// let v : Vec<usize> = BitIter::from(0b10000001).collect();
+/// assert_eq!(v, vec![0, 7]);
+/// # }
+/// ```
 pub struct BitIter<T>(T);
 
 macro_rules! iter_impl {
