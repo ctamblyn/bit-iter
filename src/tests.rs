@@ -85,3 +85,13 @@ fn min_works() {
     let iter = BitIter::from(0);
     assert_eq!(iter.min(), None);
 }
+
+#[test]
+fn can_iterate_in_reverse_order() {
+    let mut iter = BitIter::from(0x80010011u32).rev();
+    assert_eq!(iter.next(), Some(31));
+    assert_eq!(iter.next(), Some(16));
+    assert_eq!(iter.next(), Some(4));
+    assert_eq!(iter.next(), Some(0));
+    assert_eq!(iter.next(), None);
+}

@@ -13,6 +13,12 @@
 //!     for b in BitIter::from(x) {
 //!         println!("Bit {} is set.", b);
 //!     }
+//!
+//!     println!("In reverse order:");
+//!
+//!     for b in BitIter::from(x).rev() {
+//!         println!("Bit {} is set.", b);
+//!     }
 //! }
 //! ```
 //!
@@ -21,9 +27,14 @@
 //! ```text
 //! Bit 0 is set.
 //! Bit 16 is set.
+//! In reverse order:
+//! Bit 16 is set.
+//! Bit 0 is set.
 //! ```
 
 #![no_std]
+
+use core::{iter::FusedIterator, mem::size_of};
 
 #[cfg(test)]
 mod tests;
@@ -51,6 +62,16 @@ mod tests;
 /// # use bit_iter::*;
 /// let v : Vec<usize> = BitIter::from(0b10000001).collect();
 /// assert_eq!(v, vec![0, 7]);
+/// # }
+/// ```
+///
+/// `BitIter` implements `DoubleEndedIterator`, so we can also go in reverse:
+///
+/// ```rust
+/// # fn main() {
+/// # use bit_iter::*;
+/// let v : Vec<usize> = BitIter::from(0b10000001).rev().collect();
+/// assert_eq!(v, vec![7, 0]);
 /// # }
 /// ```
 pub struct BitIter<T>(T);
@@ -103,6 +124,22 @@ macro_rules! iter_impl {
             fn min(self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     Some(self.0.trailing_zeros() as usize)
+                } else {
+                    None
+                }
+            }
+        }
+
+        /// `FusedIterator` implementation for `BitIter`.
+        impl FusedIterator for BitIter<$t> {}
+
+        /// `DoubleEndedIterator` implementation for `BitIter`.
+        impl DoubleEndedIterator for BitIter<$t> {
+            fn next_back(&mut self) -> Option<Self::Item> {
+                if self.0 != 0 {
+                    let highest = 8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize;
+                    self.0 ^= 1 as $t << highest;
+                    Some(highest)
                 } else {
                     None
                 }
