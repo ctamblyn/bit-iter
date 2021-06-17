@@ -25,3 +25,63 @@ fn non_zero_signed_value_handled_correctly() {
     assert_eq!(iter.next(), Some(31));
     assert_eq!(iter.next(), None);
 }
+
+#[test]
+fn size_hint_works() {
+    let iter = BitIter::from(0x25);
+    assert_eq!(iter.size_hint(), (3, Some(3)));
+
+    let iter = BitIter::from(1);
+    assert_eq!(iter.size_hint(), (1, Some(1)));
+
+    let iter = BitIter::from(0);
+    assert_eq!(iter.size_hint(), (0, Some(0)));
+}
+
+#[test]
+fn count_works() {
+    let iter = BitIter::from(0x25);
+    assert_eq!(iter.count(), 3);
+
+    let iter = BitIter::from(1);
+    assert_eq!(iter.count(), 1);
+
+    let iter = BitIter::from(0);
+    assert_eq!(iter.count(), 0);
+}
+
+#[test]
+fn last_works() {
+    let iter = BitIter::from(0x25);
+    assert_eq!(iter.last(), Some(5usize));
+
+    let iter = BitIter::from(1);
+    assert_eq!(iter.last(), Some(0usize));
+
+    let iter = BitIter::from(0);
+    assert_eq!(iter.last(), None);
+}
+
+#[test]
+fn max_works() {
+    let iter = BitIter::from(0x25);
+    assert_eq!(iter.max(), Some(5usize));
+
+    let iter = BitIter::from(1);
+    assert_eq!(iter.max(), Some(0usize));
+
+    let iter = BitIter::from(0);
+    assert_eq!(iter.max(), None);
+}
+
+#[test]
+fn min_works() {
+    let iter = BitIter::from(0xa4);
+    assert_eq!(iter.min(), Some(2usize));
+
+    let iter = BitIter::from(0x80);
+    assert_eq!(iter.min(), Some(7usize));
+
+    let iter = BitIter::from(0);
+    assert_eq!(iter.min(), None);
+}

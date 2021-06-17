@@ -78,6 +78,35 @@ macro_rules! iter_impl {
                     None
                 }
             }
+
+            fn size_hint(&self) -> (usize, Option<usize>) {
+                let sz = self.0.count_ones() as usize;
+                (sz, Some(sz))
+            }
+
+            fn count(self) -> usize {
+                self.0.count_ones() as usize
+            }
+
+            fn last(self) -> Option<Self::Item> {
+                if self.0 != 0 {
+                    Some(8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize)
+                } else {
+                    None
+                }
+            }
+
+            fn max(self) -> Option<Self::Item> {
+                self.last()
+            }
+
+            fn min(self) -> Option<Self::Item> {
+                if self.0 != 0 {
+                    Some(self.0.trailing_zeros() as usize)
+                } else {
+                    None
+                }
+            }
         }
     )*}
 }
