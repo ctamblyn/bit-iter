@@ -18,6 +18,12 @@ fn main() {
     for b in BitIter::from(x) {
         println!("Bit {} is set.", b);
     }
+
+    println!("In reverse order:");
+
+    for b in BitIter::from(x).rev() {
+        println!("Bit {} is set.", b);
+    }
 }
 ```
 
@@ -26,4 +32,7 @@ Output:
 ```text
 Bit 0 is set.
 Bit 16 is set.
+In reverse order:
+Bit 16 is set.
+Bit 0 is set.
 ```
