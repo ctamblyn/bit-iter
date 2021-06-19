@@ -3,11 +3,11 @@ name = "bit-iter"
 version = "0.1.3"
 authors = ["Christian Tamblyn <ctamblyn76@gmail.com>"]
 edition = "2018"
-description = "A simple crate which allows iteration over the set bits in an integral value."
+description = "Iterate forward or backwards over the positions of set bits in a word."
 license = "MIT"
 documentation = "https://docs.rs/bit-iter"
 repository = "https://github.com/ctamblyn/bit-iter"
-keywords = ["bits", "iterator", "bit-twiddling"]
+keywords = ["bits", "flags", "iterator", "bit-twiddling"]
 categories = ["algorithms", "no-std"]
 
 [dependencies]
