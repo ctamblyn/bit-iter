@@ -2,6 +2,12 @@
 //!
 //! A `BitIter` may be constructed from any integral value.
 //!
+//! A `BitIter` may be constructed from any integral value, and returns the positions of the `1`
+//! bits in ascending order.
+//!
+//! `BitIter` implements `DoubleEndedIterator`, so you can iterate over the positions of the set
+//! bits in descending order too.
+//!
 //! ## Example
 //!
 //! ```rust
@@ -39,7 +45,7 @@ use core::{iter::FusedIterator, mem::size_of};
 #[cfg(test)]
 mod tests;
 
-/// An iterator which returns the positions of the set bits in an integral value.
+/// An iterator which returns the positions of the set bits in a word, in ascending order.
 ///
 /// ## Examples
 ///
@@ -55,7 +61,7 @@ mod tests;
 /// # }
 /// ```
 ///
-/// Iterate over the bits in an integer:
+/// Iterate over the bits in an integer in ascending order:
 ///
 /// ```rust
 /// # fn main() {
@@ -65,7 +71,8 @@ mod tests;
 /// # }
 /// ```
 ///
-/// `BitIter` implements `DoubleEndedIterator`, so we can also go in reverse:
+/// `BitIter` implements `DoubleEndedIterator`, so you can also get the set bit positions in
+/// descending order:
 ///
 /// ```rust
 /// # fn main() {

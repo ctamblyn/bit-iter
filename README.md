@@ -1,11 +1,15 @@
-# `bit-iter`
+# bit-iter
 
 ![Test results](https://github.com/ctamblyn/bit-iter/actions/workflows/rust.yml/badge.svg)
 [![Crates.io](https://img.shields.io/crates/v/bit-iter)](https://crates.io/crates/bit-iter)
 
-Iterate over the bits set in a word.
+Iterate forwards or backwards over the positions of bits set in a word.
 
-A `BitIter` may be constructed from any integral value.
+A `BitIter` may be constructed from any integral value, and returns the
+positions of the `1` bits in ascending order.
+
+`BitIter` implements `DoubleEndedIterator`, so you can iterate over the
+positions of the set bits in descending order too.
 
 ## Example
 
