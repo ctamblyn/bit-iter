@@ -11,20 +11,17 @@
 //! ## Example
 //!
 //! ```rust
-//! fn main() {
-//!     use bit_iter::*;
+//! # use bit_iter::*;
+//! let x : u32 = 0x10001;
 //!
-//!     let x : u32 = 0x10001;
+//! for b in BitIter::from(x) {
+//!     println!("Bit {} is set.", b);
+//! }
 //!
-//!     for b in BitIter::from(x) {
-//!         println!("Bit {} is set.", b);
-//!     }
+//! println!("In reverse order:");
 //!
-//!     println!("In reverse order:");
-//!
-//!     for b in BitIter::from(x).rev() {
-//!         println!("Bit {} is set.", b);
-//!     }
+//! for b in BitIter::from(x).rev() {
+//!     println!("Bit {} is set.", b);
 //! }
 //! ```
 //!
@@ -52,34 +49,28 @@ mod tests;
 /// Construct a `BitIter` from an integer:
 ///
 /// ```rust
-/// # fn main() {
 /// # use bit_iter::*;
 /// let mut iter = BitIter::from(0b10000001);
 /// assert_eq!(iter.next(), Some(0usize));
 /// assert_eq!(iter.next(), Some(7usize));
 /// assert_eq!(iter.next(), None);
-/// # }
 /// ```
 ///
 /// Iterate over the bits in an integer in ascending order:
 ///
 /// ```rust
-/// # fn main() {
 /// # use bit_iter::*;
 /// let v : Vec<usize> = BitIter::from(0b10000001).collect();
 /// assert_eq!(v, vec![0, 7]);
-/// # }
 /// ```
 ///
 /// `BitIter` implements `DoubleEndedIterator`, so you can also get the set bit positions in
 /// descending order:
 ///
 /// ```rust
-/// # fn main() {
 /// # use bit_iter::*;
 /// let v : Vec<usize> = BitIter::from(0b10000001).rev().collect();
 /// assert_eq!(v, vec![7, 0]);
-/// # }
 /// ```
 pub struct BitIter<T>(T);
 
