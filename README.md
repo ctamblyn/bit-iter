@@ -2,6 +2,7 @@
 
 ![Test results](https://github.com/ctamblyn/bit-iter/actions/workflows/rust.yml/badge.svg)
 [![Crates.io](https://img.shields.io/crates/v/bit-iter)](https://crates.io/crates/bit-iter)
+[![Documentation](https://docs.rs/bit-iter/badge.svg)](https://docs.rs/bit-iter)
 
 Iterate forwards or backwards over the positions of bits set in a word.
 
