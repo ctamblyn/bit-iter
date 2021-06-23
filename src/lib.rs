@@ -72,6 +72,7 @@ mod tests;
 /// let v : Vec<usize> = BitIter::from(0b10000001).rev().collect();
 /// assert_eq!(v, vec![7, 0]);
 /// ```
+#[derive(Debug)]
 pub struct BitIter<T>(T);
 
 macro_rules! iter_impl {
