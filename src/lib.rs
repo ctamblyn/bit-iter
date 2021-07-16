@@ -117,6 +117,15 @@ macro_rules! iter_impl {
                 }
             }
 
+            fn nth(&mut self, n: usize) -> Option<Self::Item> {
+                let mut i = 0;
+                while self.0 != 0 && i < n {
+                    self.0 &= self.0.wrapping_sub(1);
+                    i += 1;
+                }
+                self.next()
+            }
+
             fn max(self) -> Option<Self::Item> {
                 self.last()
             }

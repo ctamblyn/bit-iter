@@ -63,6 +63,13 @@ fn last_works() {
 }
 
 #[test]
+fn nth_works() {
+    let mut iter = BitIter::from(0x5f);
+    assert_eq!(iter.nth(3), Some(3usize));
+    assert_eq!(iter.nth(3), None);
+}
+
+#[test]
 fn max_works() {
     let iter = BitIter::from(0x25);
     assert_eq!(iter.max(), Some(5usize));
