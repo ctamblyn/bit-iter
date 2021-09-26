@@ -81,6 +81,7 @@ macro_rules! iter_impl {
         /// `From` implementation for `BitIter`.
         impl From<$t> for BitIter<$t> {
             /// Construct a BitIter value.
+            #[inline]
             fn from(value: $t) -> Self {
                 Self(value)
             }
@@ -90,6 +91,7 @@ macro_rules! iter_impl {
         impl Iterator for BitIter<$t> {
             type Item = usize;
 
+            #[inline]
             fn next(&mut self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     let trailing = self.0.trailing_zeros() as usize;
@@ -100,15 +102,18 @@ macro_rules! iter_impl {
                 }
             }
 
+            #[inline]
             fn size_hint(&self) -> (usize, Option<usize>) {
                 let sz = self.0.count_ones() as usize;
                 (sz, Some(sz))
             }
 
+            #[inline]
             fn count(self) -> usize {
                 self.0.count_ones() as usize
             }
 
+            #[inline]
             fn last(self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     Some(8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize)
@@ -117,6 +122,7 @@ macro_rules! iter_impl {
                 }
             }
 
+            #[inline]
             fn nth(&mut self, n: usize) -> Option<Self::Item> {
                 let mut i = 0;
                 while self.0 != 0 && i < n {
@@ -126,10 +132,12 @@ macro_rules! iter_impl {
                 self.next()
             }
 
+            #[inline]
             fn max(self) -> Option<Self::Item> {
                 self.last()
             }
 
+            #[inline]
             fn min(self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     Some(self.0.trailing_zeros() as usize)
@@ -144,6 +152,7 @@ macro_rules! iter_impl {
 
         /// `DoubleEndedIterator` implementation for `BitIter`.
         impl DoubleEndedIterator for BitIter<$t> {
+            #[inline]
             fn next_back(&mut self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     let highest = 8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize;
