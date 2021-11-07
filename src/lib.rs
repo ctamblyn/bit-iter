@@ -36,7 +36,7 @@
 //! ```
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/bit-iter/0.1.6")]
+#![doc(html_root_url = "https://docs.rs/bit-iter/1.0.0")]
 
 use core::{iter::FusedIterator, mem::size_of};
 
