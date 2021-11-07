@@ -94,6 +94,29 @@ fn min_works() {
 }
 
 #[test]
+fn fold_works() {
+    fn mul(acc: usize, x: usize) -> usize {
+        acc * x
+    }
+
+    let iter = BitIter::from(0b00000000);
+    let product = iter.fold(1, mul);
+    assert_eq!(product, 1);
+
+    let iter = BitIter::from(0b00000001);
+    let product = iter.fold(1, mul);
+    assert_eq!(product, 0);
+
+    let iter = BitIter::from(0b10101100);
+    let product = iter.fold(1, mul);
+    assert_eq!(product, 2 * 3 * 5 * 7);
+
+    let iter = BitIter::from(0b10101100);
+    let product = iter.fold(0, mul);
+    assert_eq!(product, 0);
+}
+
+#[test]
 fn can_iterate_in_reverse_order() {
     let mut iter = BitIter::from(0x80010011u32).rev();
     assert_eq!(iter.next(), Some(31));

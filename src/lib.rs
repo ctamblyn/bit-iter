@@ -133,6 +133,19 @@ macro_rules! iter_impl {
             }
 
             #[inline]
+            fn fold<B, F>(mut self, init: B, mut f: F) -> B
+            where
+                F: FnMut(B, Self::Item) -> B
+            {
+                let mut accum = init;
+                while self.0 != 0 {
+                    accum = f(accum, self.0.trailing_zeros() as usize);
+                    self.0 &= self.0.wrapping_sub(1);
+                }
+                accum
+            }
+
+            #[inline]
             fn max(self) -> Option<Self::Item> {
                 self.last()
             }
