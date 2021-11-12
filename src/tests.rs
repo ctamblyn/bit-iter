@@ -117,6 +117,20 @@ fn fold_works() {
 }
 
 #[test]
+fn len_works() {
+    let mut iter = BitIter::from(0x25);
+    assert_eq!(iter.len(), 3);
+    iter.next();
+    assert_eq!(iter.len(), 2);
+    iter.next();
+    assert_eq!(iter.len(), 1);
+    iter.next();
+    assert_eq!(iter.len(), 0);
+    iter.next();
+    assert_eq!(iter.len(), 0);
+}
+
+#[test]
 fn can_iterate_in_reverse_order() {
     let mut iter = BitIter::from(0x80010011u32).rev();
     assert_eq!(iter.next(), Some(31));

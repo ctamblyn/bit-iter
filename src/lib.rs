@@ -38,7 +38,10 @@
 #![no_std]
 #![doc(html_root_url = "https://docs.rs/bit-iter/1.0.0")]
 
-use core::{iter::FusedIterator, mem::size_of};
+use core::{
+    iter::{ExactSizeIterator, FusedIterator},
+    mem::size_of,
+};
 
 #[cfg(test)]
 mod tests;
@@ -174,6 +177,13 @@ macro_rules! iter_impl {
                 } else {
                     None
                 }
+            }
+        }
+
+        /// `ExactSizeIterator` implementation for `BitIter`.
+        impl ExactSizeIterator for BitIter<$t> {
+            fn len(&self) -> usize {
+                self.0.count_ones() as usize
             }
         }
     )*}
