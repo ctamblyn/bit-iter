@@ -1,6 +1,6 @@
 [package]
 name = "bit-iter"
-version = "1.0.0" # remember to update html_root_url
+version = "1.1.0" # remember to update html_root_url
 authors = ["Christian Tamblyn <ctamblyn76@gmail.com>"]
 edition = "2018"
 description = "Iterate forward or backwards over the positions of set bits in a word."
