@@ -182,6 +182,7 @@ macro_rules! iter_impl {
 
         /// `ExactSizeIterator` implementation for `BitIter`.
         impl ExactSizeIterator for BitIter<$t> {
+            #[inline]
             fn len(&self) -> usize {
                 self.0.count_ones() as usize
             }
