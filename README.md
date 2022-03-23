@@ -41,3 +41,7 @@ In reverse order:
 Bit 16 is set.
 Bit 0 is set.
 ```
+
+## Minimum supported Rust version (MSRV)
+
+The minimum supported Rust version is 1.33.0.
