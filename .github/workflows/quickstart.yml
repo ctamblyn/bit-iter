@@ -8,9 +8,29 @@ on:
       - trying
   pull_request:
 
-name: Continuous integration
+name: Tests
 
 jobs:
+  no_std:
+    name: Ensure no_std
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - stable
+          - 1.33.0
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: rustc
+          args: --manifest-path=check_no_std/Cargo.toml -- -C link-arg=-nostartfiles
+
   check:
     name: Check
     runs-on: ubuntu-latest
@@ -85,6 +105,7 @@ jobs:
     name: ci
     if: ${{ success() }}
     needs:
+      - no_std
       - check
       - test
       - fmt
