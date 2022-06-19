@@ -1,27 +1,27 @@
 #!/bin/bash
 
 run_test() {
+    local width=78
     local dots
-    local tmpfile
-    local cmd="cargo --color always $@"
+    local tmp
 
-    dots=$(head -c 74 < /dev/zero | tr '\0' '.')
-    tmpfile=$(mktemp pre-commit-actions.sh.XXXXXX)
+    dots=$(head -c "$width" < /dev/zero | tr '\0' '.')
+    tmp=$(mktemp pre-commit-actions.sh.XXXXXX)
 
-    echo -n "Running \`$cmd\` $dots" | head -c 74
+    echo -n "$* $dots" | head -c "$width"
     echo -n " "
 
-    script -e -q -c "cargo clean && $cmd" "$tmpfile" >/dev/null
-
-    if [ "$?" -eq 0 ] ; then
-        echo -e "\e[32mPASS\e[0m"
+    if script -eqc "cargo clean && cargo --color always $*" "$tmp" >/dev/null
+    then
+        echo "🎉"
     else
-        echo -e "\e[31mFAIL\e[0m\n\nOutput of \`$cmd\`:\n"
-        cat "$tmpfile"
+        echo "😭"
+        echo -e "\nOutput of last command:\n"
+        cat "$tmp"
         echo
     fi
 
-    rm "$tmpfile"
+    rm "$tmp"
 }
 
 run_test check
