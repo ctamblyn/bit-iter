@@ -9,6 +9,6 @@ documentation = "https://docs.rs/bit-iter"
 repository = "https://github.com/ctamblyn/bit-iter"
 keywords = ["bits", "flags", "iterator", "bit-twiddling"]
 categories = ["algorithms", "no-std"]
-rust-version = "1.33.0"
+rust-version = "1.53.0"
 
 [dependencies]

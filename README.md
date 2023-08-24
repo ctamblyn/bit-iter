@@ -44,7 +44,7 @@ Bit 0 is set.
 
 ## Minimum supported Rust version (MSRV) policy
 
-`bit-iter`'s current minimum supported Rust version (MSRV) is **1.33.0**.
+`bit-iter`'s current minimum supported Rust version (MSRV) is **1.53.0**.
 
 `bit-iter` is guaranteed to compile with that version.  It might also compile
 with older versions, but that could change in a future patch release.
