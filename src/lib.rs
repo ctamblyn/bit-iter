@@ -38,10 +38,7 @@
 #![no_std]
 #![doc(html_root_url = "https://docs.rs/bit-iter/1.1.1")]
 
-use core::{
-    iter::{ExactSizeIterator, FusedIterator},
-    mem::size_of,
-};
+use core::iter::{ExactSizeIterator, FusedIterator};
 
 #[cfg(test)]
 mod tests;
@@ -90,7 +87,7 @@ macro_rules! iter_impl {
 
             #[inline]
             fn leftmost_one_pos(&self) -> usize {
-                8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize
+                (<$t>::BITS - 1 - self.0.leading_zeros()) as usize
             }
 
             #[inline]
