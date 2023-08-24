@@ -81,6 +81,29 @@ pub struct BitIter<T>(T);
 
 macro_rules! iter_impl {
     ($($t:ty)*) => {$(
+        #[doc(hidden)]
+        impl BitIter<$t> {
+            #[inline]
+            fn rightmost_one_pos(&self) -> usize {
+                self.0.trailing_zeros() as usize
+            }
+
+            #[inline]
+            fn leftmost_one_pos(&self) -> usize {
+                8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize
+            }
+
+            #[inline]
+            fn count_ones(&self) -> usize {
+                self.0.count_ones() as usize
+            }
+
+            #[inline]
+            fn clear_rightmost_one(&mut self) {
+                self.0 &= self.0.wrapping_sub(1);
+            }
+        }
+
         /// `From` implementation for `BitIter`.
         impl From<$t> for BitIter<$t> {
             /// Construct a BitIter value.
@@ -97,8 +120,8 @@ macro_rules! iter_impl {
             #[inline]
             fn next(&mut self) -> Option<Self::Item> {
                 if self.0 != 0 {
-                    let trailing = self.0.trailing_zeros() as usize;
-                    self.0 &= self.0.wrapping_sub(1);
+                    let trailing = self.rightmost_one_pos();
+                    self.clear_rightmost_one();
                     Some(trailing)
                 } else {
                     None
@@ -107,19 +130,19 @@ macro_rules! iter_impl {
 
             #[inline]
             fn size_hint(&self) -> (usize, Option<usize>) {
-                let sz = self.0.count_ones() as usize;
+                let sz = self.count_ones();
                 (sz, Some(sz))
             }
 
             #[inline]
             fn count(self) -> usize {
-                self.0.count_ones() as usize
+                self.count_ones()
             }
 
             #[inline]
             fn last(self) -> Option<Self::Item> {
                 if self.0 != 0 {
-                    Some(8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize)
+                    Some(self.leftmost_one_pos())
                 } else {
                     None
                 }
@@ -129,7 +152,7 @@ macro_rules! iter_impl {
             fn nth(&mut self, n: usize) -> Option<Self::Item> {
                 let mut i = 0;
                 while self.0 != 0 && i < n {
-                    self.0 &= self.0.wrapping_sub(1);
+                    self.clear_rightmost_one();
                     i += 1;
                 }
                 self.next()
@@ -142,8 +165,8 @@ macro_rules! iter_impl {
             {
                 let mut accum = init;
                 while self.0 != 0 {
-                    accum = f(accum, self.0.trailing_zeros() as usize);
-                    self.0 &= self.0.wrapping_sub(1);
+                    accum = f(accum, self.rightmost_one_pos());
+                    self.clear_rightmost_one();
                 }
                 accum
             }
@@ -156,7 +179,7 @@ macro_rules! iter_impl {
             #[inline]
             fn min(self) -> Option<Self::Item> {
                 if self.0 != 0 {
-                    Some(self.0.trailing_zeros() as usize)
+                    Some(self.rightmost_one_pos())
                 } else {
                     None
                 }
@@ -171,7 +194,7 @@ macro_rules! iter_impl {
             #[inline]
             fn next_back(&mut self) -> Option<Self::Item> {
                 if self.0 != 0 {
-                    let highest = 8 * size_of::<$t>() - 1 - self.0.leading_zeros() as usize;
+                    let highest = self.leftmost_one_pos();
                     self.0 ^= 1 as $t << highest;
                     Some(highest)
                 } else {
@@ -184,7 +207,7 @@ macro_rules! iter_impl {
         impl ExactSizeIterator for BitIter<$t> {
             #[inline]
             fn len(&self) -> usize {
-                self.0.count_ones() as usize
+                self.count_ones()
             }
         }
     )*}
