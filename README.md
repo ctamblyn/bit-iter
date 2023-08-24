@@ -50,4 +50,4 @@ Bit 0 is set.
 with older versions, but that could change in a future patch release.
 
 If the MSRV of `bit-iter` changes, that will be done in a _minor_ version
-release (e.g. 1.1.x -> 1.2.0).
+release (e.g. 1.2.x -> 1.3.0).
