@@ -20,7 +20,7 @@ jobs:
           - stable
           - 1.53.0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
@@ -35,7 +35,7 @@ jobs:
           - stable
           - 1.53.0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
@@ -50,7 +50,7 @@ jobs:
           - stable
           - 1.53.0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
@@ -60,7 +60,7 @@ jobs:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           components: rustfmt
@@ -71,7 +71,7 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
           components: clippy
