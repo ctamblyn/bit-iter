@@ -87,7 +87,7 @@ jobs:
       - test
       - fmt
       - clippy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: CI succeeded
         run: exit 0
