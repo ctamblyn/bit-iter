@@ -181,6 +181,10 @@ macro_rules! iter_impl {
                     None
                 }
             }
+
+            fn is_sorted(self) -> bool {
+                true
+            }
         }
 
         /// `FusedIterator` implementation for `BitIter`.

@@ -139,3 +139,21 @@ fn can_iterate_in_reverse_order() {
     assert_eq!(iter.next(), Some(0));
     assert_eq!(iter.next(), None);
 }
+
+#[test]
+fn is_sorted_works() {
+    let iter = BitIter::from(0x55_u8);
+    assert!(iter.is_sorted());
+
+    let iter = BitIter::from(0x5555_u16);
+    assert!(iter.is_sorted());
+
+    let iter = BitIter::from(0x55555555_u32);
+    assert!(iter.is_sorted());
+
+    let iter = BitIter::from(0x5555555555555555_u64);
+    assert!(iter.is_sorted());
+
+    let iter = BitIter::from(0x55555555555555555555555555555555_u128);
+    assert!(iter.is_sorted());
+}
