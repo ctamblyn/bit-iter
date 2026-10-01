@@ -78,6 +78,28 @@ jobs:
           toolchain: stable
       - run: cargo clippy -- -D warnings
 
+  clippy-examples:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          components: clippy
+          toolchain: stable
+      - run: cargo clippy --examples -- -D warnings
+
+  clippy-tests:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          components: clippy
+          toolchain: stable
+      - run: cargo clippy --tests -- -D warnings
+
   ci-success:
     name: ci
     if: ${{ success() }}
@@ -87,6 +109,8 @@ jobs:
       - test
       - fmt
       - clippy
+      - clippy-examples
+      - clippy-tests
     runs-on: ubuntu-latest
     steps:
       - name: CI succeeded

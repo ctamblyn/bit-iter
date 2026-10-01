@@ -24,8 +24,12 @@ run_test() {
     rm "$tmp"
 }
 
-run_test rustc --manifest-path=check_no_std/Cargo.toml -- -C link-arg=-nostartfiles
 run_test check
 run_test test
 run_test fmt --all -- --check
 run_test clippy -- -D warnings
+run_test clippy --examples -- -D warnings
+run_test clippy --tests -- -D warnings
+
+export RUSTDOCFLAGS="-D warnings"
+run_test doc --no-deps
