@@ -156,6 +156,17 @@ macro_rules! iter_impl {
             }
 
             #[inline]
+            fn for_each<F>(mut self, mut f: F)
+            where
+                F: FnMut(Self::Item)
+            {
+                while self.0 != 0 {
+                    f(self.rightmost_one_pos());
+                    self.clear_rightmost_one();
+                }
+            }
+
+            #[inline]
             fn fold<B, F>(mut self, init: B, mut f: F) -> B
             where
                 F: FnMut(B, Self::Item) -> B

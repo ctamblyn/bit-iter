@@ -94,6 +94,14 @@ fn min_works() {
 }
 
 #[test]
+fn for_each_works() {
+    let iter = BitIter::from(0b10101100);
+    let mut sum = 0usize;
+    iter.for_each(|x| sum += x);
+    assert_eq!(sum, 2 + 3 + 5 + 7);
+}
+
+#[test]
 fn fold_works() {
     fn mul(acc: usize, x: usize) -> usize {
         acc * x
