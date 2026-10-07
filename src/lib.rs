@@ -197,7 +197,7 @@ macro_rules! iter_impl {
             fn next_back(&mut self) -> Option<Self::Item> {
                 if self.0 != 0 {
                     let highest = self.leftmost_one_pos();
-                    self.0 ^= 1 as $t << highest;
+                    self.0 ^= (1 as $t) << highest;
                     Some(highest)
                 } else {
                     None
