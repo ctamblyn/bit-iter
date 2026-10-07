@@ -182,6 +182,7 @@ macro_rules! iter_impl {
                 }
             }
 
+            #[inline]
             fn is_sorted(self) -> bool {
                 true
             }
